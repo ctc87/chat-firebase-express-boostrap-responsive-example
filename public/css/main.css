@@ -1,0 +1,40 @@
+body, html, .container-fluid {
+     height: 100%;
+}
+
+header {
+    text-align: center;
+    background: #18BC9C;
+}
+
+nav {
+    background-color: blue;
+}
+
+/* xs < 768 */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 1.2em !important;
+    }
+}
+
+/* sm */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1.4em !important;
+    }
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+    body {
+        font-size: 1.5em !important;
+    }
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 1.6em !important;
+    }
+}

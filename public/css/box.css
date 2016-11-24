@@ -1,0 +1,17 @@
+.full-height {
+ height: 100%;
+}
+
+.box {
+ /*height: 50%;*/
+ margin-top: 156px;
+ background-color: #18BC9C;
+}
+
+.boxContent {
+ background-color: white;
+ /*height: 50%;*/
+ border-radius: 10px;
+ padding-top: 1%;
+ padding-bottom: 1%;
+}

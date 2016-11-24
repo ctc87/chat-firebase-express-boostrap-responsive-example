@@ -1,0 +1,10 @@
+div(ng-controller="MyController")
+    div(class="col-sm-1")
+    div(class="col-sm-3 users-zone")
+        h4 Users
+        ul(id="example-messages" class="example-chat-messages")
+            li(ng-repeat="user in users")
+                include user.html
+    div(class="col-sm-7 chat-zone")
+        h4 Messages
+    div(class="col-sm-1")

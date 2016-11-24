@@ -1,0 +1,12 @@
+  #email:invalid, .invalid {
+    background-image: url(../images/invalid.png) !important;
+    background-position: right top;
+    background-repeat: no-repeat;
+    color:red !important;
+  }
+  #email:valid, .valid {
+    background-image: url(../images/valid.png) !important;
+    background-position: right top;
+    background-repeat: no-repeat;
+    color:green !important;
+  }

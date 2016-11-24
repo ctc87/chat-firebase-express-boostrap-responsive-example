@@ -1,0 +1,13 @@
+{
+  "name": "chat-example",
+  "version": "0.0.0",
+  "description": "A chat example with firebase and express",
+  "main": "server.js",
+  "repository": "",
+  "author": "Carlos Troyano Carmona <carlos.troyano.carmona@gmail.com>",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "pug": "^2.0.0-beta6"
+  }
+}

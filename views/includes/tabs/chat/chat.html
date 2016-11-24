@@ -1,0 +1,18 @@
+<div ng-controller="MyController">
+  <div class="tag" id="chat">
+    <div class="example-chat l-demo-container">
+      <h2>Demostración de Chat Firebase</h2>
+      <div class="example-chat-toolbar">
+      <label for="nameInput">Username:</label>
+      <input ng-model="name" type="text" id="nameInput" placeholder="enter a username...">
+    </div>
+    <ul id="example-messages" class="example-chat-messages">
+      <li ng-repeat="msg in messages">
+        <strong class="example-chat-username">{{ msg.from }}</strong>{{ msg.body }}
+      </li>
+    </ul>
+    <div>
+      <input ng-model="msg" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message...">
+    </div>
+  </div>
+</div>

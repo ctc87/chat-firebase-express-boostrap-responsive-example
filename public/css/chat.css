@@ -1,0 +1,27 @@
+.users-zone {
+    background-color: transparent;
+    height: 25vw;
+    border-radius: 10px;
+    border: solid 1px black;
+}
+
+.users-zone ul {
+ list-style: none;
+ padding: 0;
+ margin: 0;
+}
+
+.chat-zone {
+    background-color: transparent;
+    height: 25vw;
+    border-radius: 10px;
+    border: solid 1px black;
+}
+
+.nav-pills {
+    margin-bottom: 3% !important;  
+}
+
+.tab-pane {
+ /*height: 80%;   */
+}

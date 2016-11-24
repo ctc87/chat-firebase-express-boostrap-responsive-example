@@ -1,0 +1,14 @@
+ul(class="nav nav-pills")
+    li(class="active")
+        a(data-toggle="pill" href="#home") Chat 
+    li
+        a(data-toggle="pill" href="#log") Login
+    li
+        a(data-toggle="pill" href="#form") Register
+div(id="home" class="tab-pane fade in active")
+    include ./chat/chat.pug
+div(id="log" class="tab-pane fade")
+    include ./login/login.pug
+div(id="form" class="tab-pane fade")
+    include ./form/form.pug
+
