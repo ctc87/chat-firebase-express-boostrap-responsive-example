@@ -3,6 +3,10 @@ var logMail = document.getElementById("emailLog");
 var logged = false;
 
 $(document).ready(function() {
+    setTimeout(function(){
+        var objDiv = document.getElementById("scrolled");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    },2000)
     logPassword = document.getElementById("passwordLog");
     logMail = document.getElementById("emailLog");
     if(sessionStorage.email && sessionStorage.passw) {
@@ -10,30 +14,26 @@ $(document).ready(function() {
         var passw = sessionStorage.getItem("passw");
         login(email, passw);        
     }
+    
+    if(sessionStorage.getItem("user-uid")) {
+        $("#form-login").hide(1000,function(){
+         $("#form-logout").show();
+        });
+    }
+    
     $("#loginForm").submit(function () {
         login(logMail.value, logPassword.value);
+        return false;
+    });
+    $("#logoutForm").submit(function () {
+        sendDataLogout(sessionStorage.getItem("user-uid"));
         return false;
     });
         
 });
 
 function login(email, passw) {
-    firebase.auth().signInWithEmailAndPassword(email, passw).then(function(user){
-        // console.log("verfied:" + user.emailVerified);
-        if(user.emailVerified) {
-            logged = true;
-            sessionStorage.setItem("email", email);
-            sessionStorage.setItem("passw", passw);
-            console.log(activeUser(firebase.auth().currentUser));
-
-            sendData(logged);
-        }
-        else
-            loginMessage(true, "Error : Email its not verified");
-        console.log("loged: " + logged);
-    }).catch(function(error) {
-        loginMessage(true, "Error : " + error.message);
-    });
+     sendDataLogin(logged, email, passw);
 }
 
 function loginMessage(fail, message) {
@@ -47,30 +47,66 @@ function loginMessage(fail, message) {
     
 }
 
-function sendData(login) {
-    $.get( '/login'
+function sendDataLogout(id) {
+       $.get( '/logout'
         ,{
-            loged:login,
-        }, 
+            uid: id
+        },
         function(data) {
-            console.log("success");
-            // location.reload();
+            if(data.logout) {
+                $("#form-logout").hide(1000,function(){
+                    $("#form-login").show();
+                });
+                sessionStorage.removeItem("user-uid");
+                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("email");
+                sessionStorage.removeItem("passw"); 
+            }
         }
     );
 }
 
-function activeUser(id) {
-    console.log(id.uid)
-    var ref = new Firebase("https://chat-c76d5.firebaseio.com/users/" + id.uid );
-    ref.once('value', function(snapshot) {
-    var username = snapshot.val();
-        //   console.log(username.user);
-            firebase.database().ref('activeUsers/' + id.uid).set({
-                user: username.user
-            });
-    }); 
+function sendDataLoged(id) {
+    
+    $.get( '/activeUser'
+        ,{
+            uid: id
+        }, function(data) {
+            if(data.active)
+              setUserScope(id);  
+        }
+    );
 }
 
+function setUserScope(id) {
+  var ref = "/users/" + id;
+    firebase.database().ref(ref).once('value', function(snapshot) {
+        var username = snapshot.val();
+        sessionStorage.setItem("user", username.user);
+        console.log("user",sessionStorage.getItem("user"));
+    });    
+}
 
-// sendData(true);
-    
+function sendDataLogin(login, mail, passw) {
+    $.get( '/login'
+        ,{
+            loged:login,
+            mail: mail,
+            pasw: passw,
+        }, 
+        function(data) {
+            console.log(data);
+            /** inicar sesion con el token en este punto  cambiar aemas login por logout si se inicia sesion*/
+            firebase.auth().signInWithCustomToken(data.token).then(function(user){
+                sendDataLoged(user.uid);
+                sessionStorage.setItem("user-uid", user.uid);
+                $("#form-login").hide(1000,function(){
+                    $("#form-logout").show();
+                });
+            }).catch(function(error) {
+                loginMessage(true, error.message);
+                console.log("Error : " + error.message);
+            });
+        }
+    );
+}
